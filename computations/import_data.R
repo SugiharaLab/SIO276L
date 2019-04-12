@@ -1,6 +1,6 @@
 #for references
 os_sep = "/"
-dataset_path = paste("datasets","cleaned_data",sep=os_sep)
+dataset_path = paste("..","datasets","cleaned_data",sep=os_sep)
 #read in all the datas and only get value col
 ENSO_data 	<- read.csv(paste(dataset_path, "ENSO_Clean.csv", sep=os_sep))
 NAO_data 	<- read.csv(paste(dataset_path, "NAO_Clean.csv", sep=os_sep))
