@@ -9,7 +9,7 @@ weight_pairs <- data.frame(to=character(num_pairs),
 
 GEN_CCM_TEMPORAL_GRAPH <- TRUE
 CALC_SYNCHRONIZATION <- FALSE
-NUM_TIME_WINDOWS = 2
+NUM_TIME_WINDOWS = 20
 
 #handpicked best E from simplex output
 best_E <- function(mode) {
@@ -22,6 +22,7 @@ best_E <- function(mode) {
 }
 
 interval_size <- ceiling( nrow( modes_df ) /  NUM_TIME_WINDOWS )
+
 
 #generate connections between each pair
 if ( GEN_CCM_TEMPORAL_GRAPH ) {
@@ -63,7 +64,18 @@ if ( GEN_CCM_TEMPORAL_GRAPH ) {
 			}
 		}
 		qgraph( weight_pairs, layout=coords, esize=5, theme='gray')
+	}	
+
+	#make the gif
+	list_of_images = ""
+	for ( idx in 1:NUM_TIME_WINDOWS ) {
+		curr_img <- paste("plots",idx,sep='/')
+		list_of_images <- paste( list_of_images, curr_img, sep=' ')
 	}
+	gif_cmd <- paste('convert -delay 40 ',list_of_images, ' output_gif.gif',sep='')
+	print(gif_cmd)
+	#system(gif_cmd)	
+	#system(paste("cd",getwd(), "&& ",gif_cmd,sep=" "))
 }
 if ( CALC_SYNCHRONIZATION ) {
 	#iterate through every row to compute network distace
