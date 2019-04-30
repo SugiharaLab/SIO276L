@@ -21,6 +21,7 @@ best_E <- function(mode) {
 			)
 }
 
+#break interval size to be in 11 year windows
 interval_size <- ceiling( nrow( modes_df ) /  NUM_TIME_WINDOWS )
 
 

@@ -7,7 +7,7 @@ NAO_data 	<- read.csv(paste(dataset_path, "NAO_Clean.csv", sep=os_sep))
 NPI_data 	<- read.csv(paste(dataset_path, "NPI_Clean.csv", sep=os_sep))
 PDO_data 	<- read.csv(paste(dataset_path, "PDO_Clean.csv", sep=os_sep))
 
-#for  asier reference
+#for easier reference
 indices_list = list(ENSO_data, NAO_data, NPI_data, PDO_data)
 
 #get number of shared date index rows 
@@ -32,3 +32,5 @@ for (idx in seq_along(indices_list)) {
 	modes_df[idx_name] <- shared_rows
 }
 
+#remove na rows
+modes_df <- na.omit (modes_df)
