@@ -22,7 +22,7 @@ def get_city_data( city_name, month_range='all', start_month='1' ):
 	response = requests.get(city_url_format % (city_id, month_range, start_month )).content
 	trimmed_response = remove_first_3_lines( response )
 	#write csv to file	
-	output_file = open("%s_precip_data.csv" % city_name, "wb")
+	output_file = open("city_data/%s_precip_data.csv" % city_name, "wb")
 	output_file.write( trimmed_response )
 	output_file.close()
 """
@@ -32,17 +32,24 @@ month_range : can either be num months up till '12', or 'all' for all months
 start_month : the month to start the range at
 output_file	: the file to output the csv data to
 """
-def get_city_data( county_name, month_range='all', start_month='1' ):
+def get_county_data( county_name, month_range='all', start_month='1' ):
 	#get csv data
-	county_idx 	= str(location_id_constants.list_of_CA_counties.index( county_name )+1).zfill(3)
-	response = requests.get(county_url_format % (county_idx, month_range, start_month )).content
+	county_id 	= location_id_constants.coastal_counties_ids[county_name]
+	response  	= requests.get(county_url_format % (county_id, month_range, start_month )).content
 	trimmed_response = remove_first_3_lines( response )
-	#write csv to file	
-	output_file = open("%s_county_precip_data.csv" % county_name, "wb")
+	#write csv to file
+	output_file = open("coastal_data/%s_county_precip_data.csv" % county_name, "wb")
 	output_file.write( trimmed_response )
 	output_file.close()
+
+" method to get all the coast city data "
+def get_all_city_data ():
+	for city in location_id_constants.city_ids:
+		get_city_data( city )	
 " method to get all the coast counties data "
-def get_coastal_counties ():
-	for county in location_id_constants.list_of_CA_counties_on_coast:
-		get_city_data( county )	
-get_coastal_counties()
+def get_all_counties_data ():
+	for county in location_id_constants.coastal_counties_ids:
+		get_county_data( county )	
+
+get_all_city_data()
+get_all_counties_data()
