@@ -12,15 +12,6 @@ epsilon <- .04
 
 options(width=as.integer(500))
 
-#handpicked best E from simplex output
-best_E <- function(mode) {
-	switch(	mode,
-			"ENSO" 	= 5,
-			"NAO"	= 8,
-			"NPI"	= 7,
-			"PDO"	= 3,
-			)
-}
 
 #get simplex and or smap output on each dataset
 
@@ -41,7 +32,7 @@ for ( idx in 1:ncol( modes_df )) {
 	}
 	if ( RUN_SIMPLEX_TAU ) {
 		min_E <- 11 #keep track of the lowest E within range of the best tau
-		simplex_output <- simplex( mode_vec, lib, pred, E=c(1:10),tau=c(1:10))
+		simplex_output <- simplex( mode_vec, lib, pred, E=c(1:20),tp=6,tau=c(1:10))
 		best_rho <- max(simplex_output$rho)
 		#get rows with near best rho. 
 		for(i in 1:nrow(simplex_output)) {
@@ -87,4 +78,9 @@ ENSO: 		  10, 	3   .897
 NAO : 		   8, 	9   .119
 NPI : 		  10, 	7   .753
 PDO : 		  10, 	6	.745
+best E:Tau combination for mode:ENSO is 10:2 w rho 0.597036
+best E:Tau combination for mode:NAO is 10:2 w rho 0.597036
+best E:Tau combination for mode:NPI is 10:9 w rho 0.733764
+best E:Tau combination for mode:PDO is 8:1 w rho 0.357032
 ")
+

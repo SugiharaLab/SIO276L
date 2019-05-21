@@ -22,3 +22,8 @@ coastal_counties_ids = {
 "Santa Barbara" : "083",
 "Ventura" : "111"
 }
+state_ids = {
+"California":"4",
+"Oregon":"35",
+"Washington":"45"
+}

@@ -1,6 +1,7 @@
+options(width=190)
 #for references
 os_sep = "/"
-dataset_path = paste("..","datasets","cleaned_data",sep=os_sep)
+dataset_path = paste("../","datasets","cleaned_data",sep=os_sep)
 #read in all the datas and only get value col
 ENSO_data 	<- read.csv(paste(dataset_path, "ENSO_Clean.csv", sep=os_sep))
 NAO_data 	<- read.csv(paste(dataset_path, "NAO_Clean.csv", sep=os_sep))
@@ -31,6 +32,16 @@ for (idx in seq_along(indices_list)) {
 	shared_rows <- dataset[ min_row:top_row, "Value" ]
 	modes_df[idx_name] <- shared_rows
 }
+#add time col
+modes_df$time <- 1:nrow(modes_df)
+modes_df <- modes_df[,c(ncol(modes_df),1:(ncol(modes_df)-1))]
 
-#remove na rows
-modes_df <- na.omit (modes_df)
+#handpicked best E from simplex output
+best_E <- function(mode) {
+	switch(	mode,
+			"ENSO" 	= 5,
+			"NAO"	= 8,
+			"NPI"	= 7,
+			"PDO"	= 3,
+			)
+}

@@ -1,0 +1,5 @@
+source("import_data.R")
+load("synchronization_series.RData")
+library(rEDM)
+total_network_distances <- as.numeric(unlist(total_network_distances))
+simplex(total_network_distances, lib=c(1,500),pred=c(800,1000))
